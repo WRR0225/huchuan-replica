@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>互传（自用版）</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="offline">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#35d6e0"/><stop offset="1" stop-color="#0aa8c0"/>
+  </linearGradient>
+  <g id="logo-mark">
+    <circle cx="15" cy="20" r="12" fill="url(#lg1)"/>
+    <circle cx="26" cy="20" r="12" fill="url(#lg1)" opacity=".75"/>
+  </g>
+</defs></svg>
+
+<aside class="sidebar">
+  <div class="logo">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><use href="#logo-mark"/></svg>
+    <span>互传（自用版）</span>
+  </div>
+  <nav id="nav">
+    <button class="nav-item active" data-view="home">
+      <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg><span>主页</span>
+    </button>
+    <button class="nav-item" data-view="image">
+      <svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1zm1 2v9l4-4 3 3 4-5 5 6V7z"/></svg><span>图片</span>
+    </button>
+    <button class="nav-item" data-view="video">
+      <svg viewBox="0 0 24 24"><path d="M4 5h13a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1zm15 4l4-3v12l-4-3z"/></svg><span>视频</span>
+    </button>
+    <button class="nav-item" data-view="audio">
+      <svg viewBox="0 0 24 24"><path d="M9 18a3 3 0 11-2-2.83V6l12-2v11.17A3 3 0 1117 13V7.4L11 8.4v9.6z"/></svg><span>音乐</span>
+    </button>
+    <button class="nav-item" data-view="app" disabled>
+      <svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg><span>应用</span>
+    </button>
+    <button class="nav-item" data-view="doc" disabled>
+      <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6zM14 3.5V8h4.5z"/></svg><span>文档</span>
+    </button>
+    <button class="nav-item" data-view="file" disabled>
+      <svg viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v12H3z"/></svg><span>文件</span>
+    </button>
+  </nav>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="btn btn-primary" id="btn-save" disabled>
+        <svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5zM8 3v6h8V3z"/></svg>保存至电脑
+      </button>
+      <button class="btn btn-primary" id="btn-send" disabled>
+        <svg viewBox="0 0 24 24"><path d="M12 3l7 7h-4v11H9V10H5z"/></svg>发送至手机
+      </button>
+      <button class="btn btn-ghost" id="btn-refresh">
+        <svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 11-5 5H5a7 7 0 107-7z"/></svg>刷新
+      </button>
+      <button class="btn btn-ghost hidden" id="btn-delete" disabled>
+        <svg viewBox="0 0 24 24"><path d="M6 7h12l-1 14H7zM9 4h6v2H9z"/></svg>删除
+      </button>
+      <span class="sel-chip hidden" id="sel-chip"></span>
+    </div>
+    <div class="topbar-right">
+      <div class="search">
+        <svg viewBox="0 0 24 24"><path d="M10 3a7 7 0 105.2 11.7l4.4 4.4 1.4-1.4-4.4-4.4A7 7 0 0010 3zm0 2a5 5 0 110 10 5 5 0 010-10z"/></svg>
+        <input id="search" placeholder="搜索文件名" autocomplete="off">
+        <span class="search-clear">×</span>
+      </div>
+      <div class="device">
+        <div class="avatar">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M4 20c1.5-4 5-5.5 8-5.5s6.5 1.5 8 5.5z"/></svg>
+        </div>
+        <span id="device-name">未连接</span>
+      </div>
+      <button class="btn btn-ghost" id="btn-disconnect">断开连接</button>
+    </div>
+  </header>
+
+  <div class="send-bar hidden" id="send-bar">
+    <span id="send-text">准备发送…</span>
+    <div class="send-track"><i id="send-fill"></i></div>
+  </div>
+  <input type="file" id="pick" multiple hidden>
+
+  <section id="view-connect" class="connect">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><use href="#logo-mark"/></svg>
+      <h1>互传（自用版）</h1>
+    </div>
+    <div class="connect-card">
+      <div class="qr-box"><img src="/api/qr.svg?s=6" alt="连接二维码"></div>
+      <h2>等待手机连接</h2>
+      <p>打开手机上的「互传自用版」APP，点「扫码连接」扫这个二维码；<br>或点「扫描局域网电脑」在列表里选这台电脑。</p>
+      <div class="addr-list" id="addr-list"></div>
+      <p class="hint">APK 安装包：<a href="/api/apk">点击下载</a></p>
+    </div>
+  </section>
+
+  <section id="view-home" class="home hidden">
+    <div class="cats panel">
+      <button class="cat" data-view="image">
+        <span class="cat-ico c-img"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1zm1 2v9l4-4 3 3 4-5 5 6V7z"/></svg></span>
+        <span class="cat-name">图片</span><span class="cat-count" id="count-image">—</span>
+      </button>
+      <button class="cat" data-view="video">
+        <span class="cat-ico c-vid"><svg viewBox="0 0 24 24"><path d="M4 5h13a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1zm15 4l4-3v12l-4-3z"/></svg></span>
+        <span class="cat-name">视频</span><span class="cat-count" id="count-video">—</span>
+      </button>
+      <button class="cat" data-view="audio">
+        <span class="cat-ico c-aud"><svg viewBox="0 0 24 24"><path d="M9 18a3 3 0 11-2-2.83V6l12-2v11.17A3 3 0 1117 13V7.4L11 8.4v9.6z"/></svg></span>
+        <span class="cat-name">音乐</span><span class="cat-count" id="count-audio">—</span>
+      </button>
+      <button class="cat" data-view="app" disabled>
+        <span class="cat-ico c-app"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></span>
+        <span class="cat-name">应用</span><span class="cat-count">—</span>
+      </button>
+      <button class="cat" data-view="doc" disabled>
+        <span class="cat-ico c-doc"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6zM14 3.5V8h4.5z"/></svg></span>
+        <span class="cat-name">文档</span><span class="cat-count">—</span>
+      </button>
+      <button class="cat" data-view="file" disabled>
+        <span class="cat-ico c-file"><svg viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v12H3z"/></svg></span>
+        <span class="cat-name">文件</span><span class="cat-count">—</span>
+      </button>
+    </div>
+
+    <div class="recent panel">
+      <h3>最近（30天）</h3>
+      <div class="empty" id="recent-empty">
+        <svg viewBox="0 0 200 120" width="200" height="120" aria-hidden="true">
+          <path d="M70 55h25l8 8h32v40H62z" fill="#d9dde0"/>
+          <path d="M62 63h76v40H62z" fill="#e6e9eb"/>
+          <path d="M45 78l17-6 4 12-17 6z" fill="#9fd8de"/>
+          <path d="M155 78l-17-6-4 12 17 6z" fill="#9fd8de"/>
+          <circle cx="42" cy="70" r="6" fill="#b9c4c9"/>
+          <circle cx="158" cy="70" r="6" fill="#b9c4c9"/>
+          <text x="100" y="30" font-size="18" fill="#c3c9cd" text-anchor="middle">?</text>
+          <text x="80" y="42" font-size="12" fill="#d3d8db" text-anchor="middle">~</text>
+          <text x="122" y="42" font-size="12" fill="#d3d8db" text-anchor="middle">~</text>
+        </svg>
+        <p>无最近文件</p>
+      </div>
+      <div class="grid" id="recent-grid"></div>
+    </div>
+  </section>
+
+  <section id="view-list" class="listview hidden">
+    <div class="list-head">
+      <h3 id="list-title">图片</h3>
+      <span id="list-total"></span>
+      <div class="list-tools" id="list-tools">
+        <button class="btn btn-ghost" id="btn-loadall" disabled>点击加载全部以解锁排序</button>
+        <select id="sort-by" title="排序会把已加载的全部条目重排，所以要先加载完">
+          <option value="">排序（需先加载全部）</option>
+          <option value="name-asc">名称 A→Z</option>
+          <option value="name-desc">名称 Z→A</option>
+          <option value="time-desc">时间 新→旧</option>
+          <option value="time-asc">时间 旧→新</option>
+          <option value="size-desc">大小 大→小</option>
+          <option value="size-asc">大小 小→大</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid" id="list-grid"></div>
+    <div class="list-foot">
+      <button class="btn btn-ghost" id="btn-more">加载更多</button>
+    </div>
+  </section>
+</main>
+
+<div class="diag-fab">
+  <button class="btn btn-ghost" id="btn-diag">诊断</button>
+</div>
+<div class="lightbox hidden" id="lightbox">
+  <button class="lb-close" id="lb-close" title="关闭">×</button>
+  <div class="lb-stage" id="lb-stage">
+    <img id="lb-img" alt="">
+    <div class="lb-tip hidden" id="lb-tip"></div>
+  </div>
+  <div class="lb-bar">
+    <span class="lb-name" id="lb-name"></span>
+    <button class="btn lb-btn" id="lb-full">查看原图</button>
+  </div>
+</div>
+
+<div class="diag hidden" id="diag">
+  <div class="diag-head">连接诊断日志<button id="diag-close">×</button></div>
+  <pre id="diag-log"></pre>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>

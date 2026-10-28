@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#f5f6f7">
+
+    <TextView
+        android:id="@+id/peer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="已连接"
+        android:textSize="21sp"
+        android:textColor="#12c3cf"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="状态："
+        android:textSize="13sp"
+        android:textColor="#888888" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="传输记录"
+        android:textSize="14sp"
+        android:textColor="#555555" />
+
+    <ListView
+        android:id="@+id/transfers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="6dp"
+        android:divider="#e6e8ea"
+        android:dividerHeight="1dp" />
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="暂无传输，在电脑网页上勾选文件即可开始"
+        android:textSize="13sp"
+        android:textColor="#999999" />
+
+    <Button
+        android:id="@+id/btn_disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="断开连接"
+        android:textColor="#ffffff"
+        android:backgroundTint="#e06060" />
+</LinearLayout>

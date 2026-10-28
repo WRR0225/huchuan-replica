@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#f5f6f7">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/ic_logo"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="互传（自用版）"
+            android:textSize="17sp"
+            android:textColor="#222222"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="扫描局域网电脑"
+        android:textColor="#ffffff"
+        android:backgroundTint="#12c3cf" />
+
+    <Button
+        android:id="@+id/btn_qr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="扫码连接"
+        android:textColor="#ffffff"
+        android:backgroundTint="#5bd3dc" />
+
+    <Button
+        android:id="@+id/btn_perm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="授予「所有文件访问」以浏览文档"
+        android:textColor="#0a8ea0"
+        android:backgroundTint="#ffffff"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="选择一种方式连接电脑"
+        android:textSize="13sp"
+        android:textColor="#888888" />
+
+    <ListView
+        android:id="@+id/servers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:divider="#e6e8ea"
+        android:dividerHeight="1dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="说明：连接成功后会自动进入连接页。若扫不到电脑，请确认手机与电脑在同一 WiFi，且路由器未开启 AP 隔离。"
+        android:textSize="13sp"
+        android:textColor="#888888"
+        android:lineSpacingExtra="5dp" />
+</LinearLayout>
